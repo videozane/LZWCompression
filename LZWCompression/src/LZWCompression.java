@@ -1,24 +1,44 @@
 import java.util.*;
+import java.io.*;
 import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 
 public class LZWCompression {
 	private HashMap<String, Integer> table;
-	private String input;
+	private static String inputFileName;
 	private ArrayList<Integer> output;
 	
-	public LZWCompression(String input){
+	public LZWCompression(String inputFileName) throws IOException{
 		table=new HashMap<String,Integer>(); //table of values
-		this.input=input;
+		this.inputFileName=inputFileName;
 		output=new ArrayList<Integer>();
 		
 		for(int i=0;i<256;i++){
 			table.put(""+(char)i,i);
 		}
+		compress(readFile());
 	}
 	
-	public void compress() throws IOException{
+	public static String readFile() {
+		String contents=""; //contents of input file
+		try (BufferedReader buffer = new BufferedReader(new InputStreamReader((new FileInputStream(inputFileName))))){
+			buffer.mark(300);
+			while(buffer.readLine()!=null) {
+				buffer.reset();
+				contents+=buffer.readLine();
+				buffer.mark(300);
+			}
+		}
+		catch (IOException e){
+			System.out.println (e);
+		}
+		return contents;
+	}
+
+	public void compress(String input) throws IOException{
+		
 		String c=""; //current String
 		String cn=""; //current + next
 		int tableValue=256;
@@ -48,7 +68,6 @@ public class LZWCompression {
 	
 	
 	public static void main (String [] args) throws IOException {
-		LZWCompression c = new LZWCompression("TOBEORNOTTOBEORTOBEORNOT");
-		c.compress();
+		LZWCompression c = new LZWCompression("lzw-file1.txt");
 	}
 }
