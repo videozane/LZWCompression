@@ -5,10 +5,10 @@ import java.io.IOException;
 
 
 public class LZWCompression {
-	private HashMap<String, Integer> table;
+	private HashMap<String, Integer> table; //integers associated with characters
 	private static String inputFileName;
-	private ArrayList<Integer> output;
-	private StringBuilder outputString;
+	private ArrayList<Integer> outputIntegers; //arraylist of dictionary values associated with characters
+	private StringBuilder outputString; //in order to store all binary in one object
 	
 	public LZWCompression(String inputFileName) throws IOException{
 		table=new HashMap<String,Integer>(); //table of values
@@ -51,7 +51,7 @@ public class LZWCompression {
 				c=cn;
 			}else {
 				output.add(table.get(c));
-				table.put(cn,tableValue++); //adding the to table
+				table.put(cn,tableValue++); //adding to table/dictionary
 				c=""+n;
 			}
 		}
@@ -62,7 +62,7 @@ public class LZWCompression {
 	
 	public void output() throws IOException {
 		TestBin printer = new TestBin();
-		for(int joe: output){ //for loop in order to construct one long string of binary representing all dictionary values
+		for(int joe: output){ //for loop in order to construct one long string of binary representing all dictionary values used
 			String result = Integer.toBinaryString(joe);
 			String s = String.format("%9s", result).replaceAll(" ", "0");
 			outputString.append(s);
