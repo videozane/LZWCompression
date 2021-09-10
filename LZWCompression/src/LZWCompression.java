@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -9,26 +8,29 @@ public class LZWCompression {
 	private HashMap<String, Integer> table;
 	private static String inputFileName;
 	private ArrayList<Integer> output;
+	private StringBuilder outputString;
 	
 	public LZWCompression(String inputFileName) throws IOException{
 		table=new HashMap<String,Integer>(); //table of values
 		this.inputFileName=inputFileName;
 		output=new ArrayList<Integer>();
+		outputString= new StringBuilder("");
 		
 		for(int i=0;i<256;i++){
 			table.put(""+(char)i,i);
 		}
 		compress(readFile());
+		output();
 	}
 	
 	public static String readFile() {
 		String contents=""; //contents of input file
 		try (BufferedReader buffer = new BufferedReader(new InputStreamReader((new FileInputStream(inputFileName))))){
-			buffer.mark(300);
+			buffer.mark(1000);
 			while(buffer.readLine()!=null) {
 				buffer.reset();
 				contents+=buffer.readLine();
-				buffer.mark(300);
+				buffer.mark(1000);
 			}
 		}
 		catch (IOException e){
@@ -56,18 +58,19 @@ public class LZWCompression {
 		if (!c.equals("")) {
 			output.add(table.get(c));
 		}
-            
-		
-		//output to file
-		FileWriter writer = new FileWriter("output.txt"); 
-		for(int val: output) {
-		  writer.write(""+val+", ");
-		}
-		writer.close();
 	}
 	
+	public void output() throws IOException {
+		TestBin printer = new TestBin();
+		for(int joe: output){
+			String result = Integer.toBinaryString(joe);
+			String s = String.format("%9s", result).replaceAll(" ", "0");
+			outputString.append(s);
+		}
+		printer.toFile(printer.fromAscii(outputString.toString().toCharArray()));
+	}
 	
 	public static void main (String [] args) throws IOException {
-		LZWCompression c = new LZWCompression("lzw-file1.txt");
+		LZWCompression w = new LZWCompression("lzw-file2.txt");
 	}
 }
