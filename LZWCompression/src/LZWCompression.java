@@ -13,7 +13,7 @@ public class LZWCompression {
 	public LZWCompression(String inputFileName) throws IOException{
 		table=new HashMap<String,Integer>(); //table of values
 		this.inputFileName=inputFileName;
-		output=new ArrayList<Integer>();
+		outputIntegers=new ArrayList<Integer>();
 		outputString= new StringBuilder("");
 		
 		for(int i=0;i<256;i++){
@@ -34,7 +34,6 @@ public class LZWCompression {
 			}
 		}
 		catch (IOException e){
-			System.out.println (e);
 		}
 		return contents;
 	}
@@ -50,20 +49,20 @@ public class LZWCompression {
 			if(table.containsKey(cn)) { //since exists, don't put into dictionary yet. move on.
 				c=cn;
 			}else {
-				output.add(table.get(c));
+				outputIntegers.add(table.get(c));
 				table.put(cn,tableValue++); //adding to table/dictionary
 				c=""+n;
 			}
 		}
 		if (!c.equals("")) {
-			output.add(table.get(c));
+			outputIntegers.add(table.get(c));
 		}
 	}
 	
 	public void output() throws IOException {
 		TestBin printer = new TestBin();
-		for(int joe: output){ //for loop in order to construct one long string of binary representing all dictionary values used
-			String result = Integer.toBinaryString(joe);
+		for(int val: outputIntegers){ //for loop in order to construct one long string of binary representing all dictionary values used
+			String result = Integer.toBinaryString(val);
 			String s = String.format("%9s", result).replaceAll(" ", "0");
 			outputString.append(s);
 		}
@@ -71,6 +70,6 @@ public class LZWCompression {
 	}
 	
 	public static void main (String [] args) throws IOException { //main to test that it works.
-		LZWCompression w = new LZWCompression("lzw-file2.txt");
+		LZWCompression w = new LZWCompression("lzw-file3.txt");
 	}
 }
