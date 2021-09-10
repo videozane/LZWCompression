@@ -38,7 +38,7 @@ public class LZWCompression {
 		return contents;
 	}
 
-	public void compress(String input) throws IOException{
+	public void compress(String input) throws IOException{ //creates arraylist of dictionary values encoded.
 		
 		String c=""; //current String
 		String cn=""; //current + next
