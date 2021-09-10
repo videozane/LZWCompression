@@ -35,7 +35,7 @@ public class TestBin {
 	  private static final int[] BITS = { BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7 };
 	  
 	
-	public  byte[] fromAscii(char[] ascii) {
+	public  byte[] fromAscii(char[] ascii) { //convert char[] to bytes
 	    byte[] l_raw = new byte[ascii.length >> 3];
 	    for (int ii = 0, jj = ascii.length - 1; ii < l_raw.length; ii++, jj -= 8) {
 	      for (int bits = 0; bits < BITS.length; ++bits) {
@@ -47,7 +47,7 @@ public class TestBin {
 	    return l_raw;
 	}
 	
-	public void toFile(byte[] data) throws IOException {
+	public void toFile(byte[] data) throws IOException { //export to file
 		FileOutputStream fos = new FileOutputStream("output.bin");
 		fos.write(data);
 	}

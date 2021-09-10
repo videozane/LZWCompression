@@ -23,7 +23,7 @@ public class LZWCompression {
 		output();
 	}
 	
-	public static String readFile() {
+	public static String readFile() { //reads in file
 		String contents=""; //contents of input file
 		try (BufferedReader buffer = new BufferedReader(new InputStreamReader((new FileInputStream(inputFileName))))){
 			buffer.mark(1000);
@@ -62,15 +62,15 @@ public class LZWCompression {
 	
 	public void output() throws IOException {
 		TestBin printer = new TestBin();
-		for(int joe: output){
+		for(int joe: output){ //for loop in order to construct one long string of binary representing all dictionary values
 			String result = Integer.toBinaryString(joe);
 			String s = String.format("%9s", result).replaceAll(" ", "0");
 			outputString.append(s);
 		}
-		printer.toFile(printer.fromAscii(outputString.toString().toCharArray()));
+		printer.toFile(printer.fromAscii(outputString.toString().toCharArray())); //output to file by calling on testbin class.
 	}
 	
-	public static void main (String [] args) throws IOException {
+	public static void main (String [] args) throws IOException { //main to test that it works.
 		LZWCompression w = new LZWCompression("lzw-file2.txt");
 	}
 }
