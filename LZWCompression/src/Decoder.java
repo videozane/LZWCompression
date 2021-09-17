@@ -10,8 +10,8 @@ public class Decoder {
 	private int sizeOfDictionary;
 	
 	
-	public Decoder(String fileName) {
-		
+	public Decoder(String fileName, int sizeOfByte) {
+		this.sizeOfByte = sizeOfByte;
 		sizeOfDictionary = 0;
 		//code below puts in normal chars into the table
 		dictionary = new HashMap<Integer, String> ();
@@ -67,15 +67,13 @@ public class Decoder {
 		/**
 		 * parses String into proper size of each byte
 		 */
-		ArrayList<String> parsedStr = new ArrayList<String>();
+		ArrayList<Integer> parsedInts = new ArrayList<Integer>();
 		for (int i = 0; i < toBeDecoded.length()-sizeOfByte; i+=sizeOfByte) {
-			parsedStr.add(toBeDecoded.substring(i,sizeOfByte));
+			String toBeChanged = toBeDecoded.substring(i,i+sizeOfByte);
+			parsedInts.add(binStringToInteger(toBeChanged));
 		}
 		
-		/**
-		 * converts parsed String into ints
-		 */
-		ArrayList<Integer> parsedInts = binStringsToIntegers (parsedStr);
+
 		String current = "";
 		String next = "";
 		for (int i = 0; i < parsedInts.size()-1; i++) {
@@ -94,15 +92,12 @@ public class Decoder {
 		
 	}
 	
-	public static ArrayList<Integer> binStringsToIntegers (ArrayList<String> input){
-		ArrayList<Integer> toRet = new ArrayList<Integer>();
+	public static int binStringToInteger (String input){
 		
 		
-		String binaryString = "";
-        double convertedDouble = 0;
-        for (int j = 0; j < input.size(); j++) {
-        	binaryString = input.get(j);
-        	convertedDouble = 0;
+       
+        	String binaryString = input;
+        	double convertedDouble = 0;
 	        for (int i = 0; i < binaryString.length(); i++) {
 	
 	            if (binaryString.charAt(i) == '1') {
@@ -112,12 +107,11 @@ public class Decoder {
 	        }
 	
 	        int convertedInt = (int) convertedDouble;
-	        toRet.add(convertedInt);
-        }
-		return toRet;
+        
+		return convertedInt;
 	}
 	
 	public static void main (String [] args) {
-		Decoder tester = new Decoder ("output.bin");
+		Decoder tester = new Decoder ("output.bin", 9);
 	}
 }
