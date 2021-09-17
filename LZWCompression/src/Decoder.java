@@ -95,7 +95,7 @@ public class Decoder {
 	public static int binStringToInteger (String input){
 		
 		
-       
+   
         	String binaryString = input;
         	double convertedDouble = 0;
 	        for (int i = 0; i < binaryString.length(); i++) {

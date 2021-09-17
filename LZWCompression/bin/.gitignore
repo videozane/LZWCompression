@@ -3,9 +3,4 @@
 /TestBin.class
 /BinaryFileReader.class
 /Decoder.class
-/.DS_Store
-/.classpath
-/.gitignore
-/.project
-/lzw-file3.txt
-/readme.txt
+/TestingFileWriter.class
