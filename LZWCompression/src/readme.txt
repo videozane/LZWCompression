@@ -1,3 +1,0 @@
-It should be working. All 3 test files compressed. I added some comments in order to clarify what the purpose of variables and methods are, but it might not be good enough. I call on another class that converts things to bytes.
-
-If you want to use the binary you can, but you can alter the method compress() to output the ArrayList of integers to a file and use that. The integers in there are the dictionary values like he said on the board

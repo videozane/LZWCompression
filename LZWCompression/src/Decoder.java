@@ -112,6 +112,6 @@ public class Decoder {
 	}
 	
 	public static void main (String [] args) {
-		Decoder tester = new Decoder ("output.bin", 9);
+		Decoder tester = new Decoder ("encodeTest.bin", 9);
 	}
 }
